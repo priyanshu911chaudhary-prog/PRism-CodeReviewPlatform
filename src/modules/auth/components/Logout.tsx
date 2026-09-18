@@ -5,13 +5,12 @@ import { authClient } from "@/lib/authClient"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 
-const Logout = ({
+const Logout = React.forwardRef<HTMLButtonElement, React.ComponentProps<typeof Button>>(({
     children,
     className,
-}: {
-    children: React.ReactNode
-    className?: string
-}) => {
+    variant = "ghost",
+    ...props
+}, ref) => {
     const router = useRouter()
 
     const handleLogout = async () => {
@@ -26,12 +25,17 @@ const Logout = ({
 
     return (
         <Button
+            ref={ref}
+            variant={variant}
             onClick={handleLogout}
-            className="cursor-pointer"
+            className={className}
+            {...props}
         >
             {children}
         </Button>
     )
-}
+})
+
+Logout.displayName = "Logout"
 
 export default Logout
