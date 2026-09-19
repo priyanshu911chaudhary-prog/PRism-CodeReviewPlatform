@@ -2,9 +2,9 @@
 import prisma from "@/lib/db";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import { getRepositories } from "@/modules/github/lib/github";
+import { createWebhook, getRepositories } from "@/modules/github/lib/github";
 
-export const fetchRepositories = async (page:number,perPage:number) => {
+export const fetchRepositories = async (page: number, perPage: number) => {
     try {
         const session = await auth.api.getSession({
             headers: await headers()
@@ -12,7 +12,7 @@ export const fetchRepositories = async (page:number,perPage:number) => {
         if (!session?.user) {
             throw new Error("Unauthorized")
         }
-        const repos = await getRepositories(page,perPage);
+        const repos = await getRepositories(page, perPage);
 
         const dbRepos = await prisma.repository.findMany({
             where: {
@@ -20,16 +20,64 @@ export const fetchRepositories = async (page:number,perPage:number) => {
             }
         })
 
-        const connectedRepo=new Set(dbRepos.map((repo)=>repo.githubId))
+        const connectedRepo = new Set(dbRepos.map((repo) => repo.githubId))
 
-        return repos.map((repo:any)=>{
-            return{
+        return repos.map((repo: any) => {
+            return {
                 ...repo,
-                isConnected:connectedRepo.has(BigInt(repo.id))
+                isConnected: connectedRepo.has(BigInt(repo.id))
             }
         })
     } catch (err) {
         console.log(err);
         throw new Error("Failed to fetch repositories")
+    }
+}
+
+export const connectRepository = async (owner: string, repo: string, githubId: number) => {
+    const session = await auth.api.getSession({ headers: await headers() });
+    if (!session?.user) {
+        throw new Error("Unauthorized")
+    }
+
+    //todo : check if user can connect more repo
+
+    try {
+        const webhook = await createWebhook(owner, repo);
+
+        console.log("=== CONNECT REPOSITORY DEBUG ===");
+        console.log("owner:", owner);
+        console.log("repo:", repo);
+        console.log("githubId:", githubId);
+        console.log("session.user.id:", session.user.id);
+        console.log("webhook:", webhook);
+
+        if (webhook) {
+
+            console.log("webhook.created_at:", webhook.created_at);
+            console.log("webhook.updated_at:", webhook.updated_at);
+
+            await prisma.repository.create({
+                data: {
+                    githubId: BigInt(githubId),
+                    name: repo,
+                    owner: owner,
+                    fullName: `${owner}/${repo}`,
+                    url: `https://github.com/${owner}/${repo}`,
+                    userId: session.user.id,
+                    createdAt: new Date(webhook.created_at),
+                    updatedAt: new Date(webhook.updated_at)
+                }
+            })
+        }
+
+        //todo: increment repository count for usage tracking
+
+        //todo: trigger repository indexing for RAG
+
+        return webhook;
+    } catch (err) {
+        console.log(err);
+        throw new Error("Failed to connect repository");
     }
 }

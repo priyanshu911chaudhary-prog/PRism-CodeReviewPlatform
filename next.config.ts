@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  allowedDevOrigins: ['sympathy-cause-jaywalker.ngrok-free.dev'],
 };
 
 export default nextConfig;

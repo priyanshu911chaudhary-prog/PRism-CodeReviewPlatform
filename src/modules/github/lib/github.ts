@@ -96,3 +96,31 @@ export const getRepositories=async(page:number=1,perPage:number=10)=>{
         throw new Error("Failed to fetch repositories");
     }
 }
+
+export const createWebhook=async(owner:string,repo:string)=>{
+    const token=await getGithubToken()
+    const octokit =new Octokit({
+        auth:token
+    });
+    const webhookURL=`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/webhooks/github`;
+    const {data:hooks}=await octokit.rest.repos.listWebhooks({
+        owner,
+        repo,
+    })
+    const existingHook=hooks.find(hook=>hook.config.url===webhookURL);
+    if(existingHook){
+        console.log("Webhook already exists")
+        return existingHook;
+    }
+    const {data}=await octokit.rest.repos.createWebhook({
+        owner,
+        repo,
+        config:{
+            url:webhookURL,
+            content_type:"json",
+        },
+        events:["push","pull_request"],
+        active:true
+    })
+    return data;
+}

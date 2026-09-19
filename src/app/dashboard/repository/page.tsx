@@ -28,6 +28,7 @@ import { ExternalLink, Star, Search } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useRepositories } from "@/modules/repository/hooks/useRepository";
 import { RepositoryListSkeleton } from "@/modules/repository/components/repository-skeleton";
+import { useConnectRepository } from "@/modules/repository/hooks/useConnectRepository";
 
 interface Repository {
     id: string;
@@ -50,6 +51,8 @@ const RepositoryPage = () => {
         hasNextPage,
         isFetchingNextPage
     } = useRepositories();
+
+    const { mutate: connectRepository } = useConnectRepository();
 
     const [searchQuery, setSearchQuery] = useState("");
     const [language, setLanguage] = useState("all");
@@ -119,6 +122,17 @@ const RepositoryPage = () => {
 
     const handleConnect = (repo: Repository) => {
         setLocalConnectingId(Number(repo.id));
+        connectRepository({
+            owner: repo.full_name.split('/')[0],
+            repo: repo.name,
+            githubId: Number(repo.id)
+        },
+            {
+                onSettled: () => {
+                    setLocalConnectingId(null);
+                }
+            }
+        )
     };
 
     return (
@@ -127,19 +141,19 @@ const RepositoryPage = () => {
                 <h1 className="text-3xl font-bold tracking-tight">Repositories</h1>
                 <p className="text-muted-foreground">Manage your connected git repositories</p>
             </div>
-            
+
             <div className="flex flex-col md:flex-row gap-4">
                 <div className="relative flex-1">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input 
-                        type="text" 
-                        placeholder="Search repositories" 
-                        value={searchQuery} 
-                        onChange={(e) => setSearchQuery(e.target.value)} 
+                    <Input
+                        type="text"
+                        placeholder="Search repositories"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
                         className="pl-9"
                     />
                 </div>
-                
+
                 <Select value={language} onValueChange={setLanguage}>
                     <SelectTrigger className="w-full md:w-[180px]">
                         <SelectValue placeholder="Language" />
@@ -183,7 +197,7 @@ const RepositoryPage = () => {
                         <EmptyDescription>Try adjusting your search or filters.</EmptyDescription>
                     </Empty>
                 )}
-                
+
                 {filteredRepositories.map((repo: any) => (
                     <Card
                         key={repo.id}
@@ -206,7 +220,7 @@ const RepositoryPage = () => {
                                                 Connected
                                             </Badge>
                                         )}
-                                        
+
                                         <div className="flex items-center text-muted-foreground text-sm gap-1 ml-auto md:ml-2">
                                             <Star className="h-3.5 w-3.5 fill-current" />
                                             <span>{repo.stargazers_count}</span>
@@ -218,7 +232,7 @@ const RepositoryPage = () => {
                                             {repo.description}
                                         </CardDescription>
                                     )}
-                                    
+
                                     {repo.topics && repo.topics.length > 0 && (
                                         <div className="flex flex-wrap gap-1.5 mt-2">
                                             {repo.topics.slice(0, 5).map((topic: string) => (
@@ -265,7 +279,7 @@ const RepositoryPage = () => {
                     </Card>
                 ))}
             </div>
-            
+
             <div ref={observerTarget} className="py-4">
                 {isFetchingNextPage && <RepositoryListSkeleton />}
 
