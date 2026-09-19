@@ -6,6 +6,47 @@ import prisma from "@/lib/db";
 import { headers } from "next/headers";
 import { Octokit } from "octokit";
 
+export async function getContributionStats(){
+    try{
+        const session=await auth.api.getSession({
+            headers:await headers(),
+        })
+
+        if(!session?.user){
+            throw new Error("Unauthorized")
+        }
+
+        const token = await getGithubToken()
+
+        const octokit = new Octokit({ auth: token })
+
+        const { data: user } = await octokit.rest.users.getAuthenticated()
+        const username=user.login;
+
+        const calendar =await fetchUserContribution(token,username);
+
+        if(!calendar){
+            return null
+        }
+
+        const contributions=calendar.weeks.flatMap((week:any)=>week.contributionDays)
+        .map((day:any)=>({
+            date:day.date,
+            count:day.contributionCount,
+            level:Math.min(4,Math.floor(day.contributionCount/3)),
+        }))
+
+        return {
+            contributions:contributions,
+            totalContributions:calendar.totalContributions
+        }
+
+    }catch(err){
+        console.log(err)
+        throw new Error("Failed to fetch contribution stats")
+    }
+}
+
 export async function getDashboardStats() {
     try {
         const session = await auth.api.getSession({
@@ -27,7 +68,7 @@ export async function getDashboardStats() {
         const totalCommits = calendar?.totalContributions || 0
 
         const { data: prs } = await octokit.rest.search.issuesAndPullRequests({
-            q: `author:${user.login} type:pr is:closed`,
+            q: `author:${user.login} type:pr`,
             sort: "created",
             order: "desc",
             per_page: 1
@@ -149,8 +190,7 @@ export async function getMonthlyActivity() {
         })
 
         const { data: prs } = await octokit.rest.search.issuesAndPullRequests({
-            q: `author:${user.login} type:pr created:>${sixMonthsAgo.toISOString().split("T")[0]
-                }`,
+            q: `author:${user.login} type:pr created:>${sixMonthsAgo.toISOString().split("T")[0]}`,
             per_page: 100,
         });
 
@@ -161,7 +201,7 @@ export async function getMonthlyActivity() {
                 monthlyData[monthKey].prs += 1;
             }
         });
-        
+
         return Object.keys(monthlyData).map((name) => ({
             name,
             ...monthlyData[name]

@@ -6,11 +6,12 @@ import { ThemeToggle } from "@/components/ThemeToggle"
 import Logout from "@/modules/auth/components/Logout"
 import { LogOut } from "lucide-react"
 import {requireAuth} from "@/modules/auth/utils/authUtils"
+import { Blobatar } from "@/components/ui/blobatar"
 
 const DashboardLayout = async(
     { children }: { children: React.ReactNode }
 ) => {
-    await requireAuth()
+    const session = await requireAuth()
     return (
         <SidebarProvider>
             <AppSidebar />
@@ -22,6 +23,10 @@ const DashboardLayout = async(
                         <h1 className="text-sm font-semibold">Dashboard</h1>
                     </div>
                     <div className="flex items-center gap-2">
+                        <Blobatar 
+                            name={session.user.name || session.user.email || "User"} 
+                            className="h-8 w-8 rounded-full" 
+                        />
                         <ThemeToggle />
                         <Logout variant="ghost" size="icon" className="h-8 w-8 px-0 text-destructive hover:bg-destructive/10 hover:text-destructive">
                             <LogOut className="size-4" />

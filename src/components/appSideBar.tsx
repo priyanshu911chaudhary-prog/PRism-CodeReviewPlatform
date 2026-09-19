@@ -25,7 +25,7 @@ import {
     useSidebar,
 } from "@/components/ui/sidebar"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Blobatar } from "@/components/ui/blobatar"
 
 
 
@@ -79,8 +79,7 @@ export const AppSidebar = () => {
     const user = session.user
     const userName = user.name || "Guest"
     const userEmail = user.email || ""
-    const userInitials = userName.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2)
-    const userAvatar = user.image || ""
+
 
     return (
         <Sidebar variant="sidebar" collapsible="icon">
@@ -133,10 +132,10 @@ export const AppSidebar = () => {
                             size="lg"
                             className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                         >
-                            <Avatar className="h-8 w-8 rounded-lg shrink-0">
-                                <AvatarImage src={userAvatar} alt={userName} />
-                                <AvatarFallback className="rounded-lg">{userInitials}</AvatarFallback>
-                            </Avatar>
+                            <Blobatar 
+                                name={userName || userEmail || "User"} 
+                                className="h-8 w-8 rounded-lg shrink-0"
+                            />
                             <div className="grid flex-1 text-left text-sm leading-tight">
                                 <span className="truncate font-semibold">{userName}</span>
                                 <span className="truncate text-xs text-sidebar-foreground/70">{userEmail}</span>
