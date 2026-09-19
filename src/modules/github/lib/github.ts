@@ -77,3 +77,22 @@ export async function fetchUserContribution(token: string, username: string) {
         throw new Error("Failed to fetch user contribution")
     }
 }
+
+export const getRepositories=async(page:number=1,perPage:number=10)=>{
+    try{
+        const token =await getGithubToken();
+        const octokit=new Octokit({auth:token});
+
+        const {data}=await octokit.rest.repos.listForAuthenticatedUser({
+            per_page:perPage,
+            page:page,
+            type:"owner",
+            sort:"updated",
+            direction:"desc",
+        });
+        return data;
+    }catch(err){
+        console.log(err);
+        throw new Error("Failed to fetch repositories");
+    }
+}
