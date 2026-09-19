@@ -3,7 +3,7 @@ import prisma from "@/lib/db";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { createWebhook, getRepositories } from "@/modules/github/lib/github";
-
+import { revalidatePath } from "next/cache";
 export const fetchRepositories = async (page: number, perPage: number) => {
     try {
         const session = await auth.api.getSession({
@@ -74,6 +74,9 @@ export const connectRepository = async (owner: string, repo: string, githubId: n
         //todo: increment repository count for usage tracking
 
         //todo: trigger repository indexing for RAG
+
+        revalidatePath("/dashboard/settings");
+        revalidatePath("/dashboard/repository");
 
         return webhook;
     } catch (err) {
