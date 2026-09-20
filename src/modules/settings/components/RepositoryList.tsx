@@ -137,7 +137,7 @@ export function RepositoryList() {
                     </div>
                     <p className="text-lg font-medium">No repositories connected</p>
                     <p className="text-sm text-muted-foreground mt-1 max-w-sm">
-                        You haven't connected any GitHub repositories yet. Go to the Repositories page to connect one.
+                        You haven&apos;t connected any GitHub repositories yet. Go to the Repositories page to connect one.
                     </p>
                 </CardContent>
             </Card>

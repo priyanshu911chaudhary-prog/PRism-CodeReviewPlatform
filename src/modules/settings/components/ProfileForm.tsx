@@ -42,6 +42,7 @@ export function ProfilePage() {
 
     useEffect(() => {
         if (profile) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setName(profile.name || "")
             setEmail(profile.email || "")
         }

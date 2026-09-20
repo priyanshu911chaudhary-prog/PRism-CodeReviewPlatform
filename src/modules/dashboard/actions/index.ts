@@ -2,17 +2,16 @@
 
 import { fetchUserContribution, getGithubToken } from "@/modules/github/lib/github"
 import { auth } from "@/lib/auth";
-import prisma from "@/lib/db";
 import { headers } from "next/headers";
 import { Octokit } from "octokit";
 
-export async function getContributionStats(){
-    try{
-        const session=await auth.api.getSession({
-            headers:await headers(),
+export async function getContributionStats() {
+    try {
+        const session = await auth.api.getSession({
+            headers: await headers(),
         })
 
-        if(!session?.user){
+        if (!session?.user) {
             throw new Error("Unauthorized")
         }
 
@@ -21,27 +20,29 @@ export async function getContributionStats(){
         const octokit = new Octokit({ auth: token })
 
         const { data: user } = await octokit.rest.users.getAuthenticated()
-        const username=user.login;
+        const username = user.login;
 
-        const calendar =await fetchUserContribution(token,username);
+        const calendar = await fetchUserContribution(token, username);
 
-        if(!calendar){
+        if (!calendar) {
             return null
         }
 
-        const contributions=calendar.weeks.flatMap((week:any)=>week.contributionDays)
-        .map((day:any)=>({
-            date:day.date,
-            count:day.contributionCount,
-            level:Math.min(4,Math.floor(day.contributionCount/3)),
-        }))
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const contributions = calendar.weeks.flatMap((week: any) => week.contributionDays)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            .map((day: any) => ({
+                date: day.date,
+                count: day.contributionCount,
+                level: Math.min(4, Math.floor(day.contributionCount / 3)),
+            }))
 
         return {
-            contributions:contributions,
-            totalContributions:calendar.totalContributions
+            contributions: contributions,
+            totalContributions: calendar.totalContributions
         }
 
-    }catch(err){
+    } catch (err) {
         console.log(err)
         throw new Error("Failed to fetch contribution stats")
     }
@@ -150,7 +151,9 @@ export async function getMonthlyActivity() {
             monthlyData[monthKey] = { commits: 0, prs: 0, reviews: 0 };
         }
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         calendar.weeks.forEach((week: any) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             week.contributionDays.forEach((day: any) => {
                 const date = new Date(day.date);
                 const monthKey = monthNames[date.getMonth()];
@@ -194,6 +197,7 @@ export async function getMonthlyActivity() {
             per_page: 100,
         });
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         prs.items.forEach((pr: any) => {
             const date = new Date(pr.created_at);
             const monthKey = monthNames[date.getMonth()];
@@ -209,7 +213,8 @@ export async function getMonthlyActivity() {
 
 
     } catch (err) {
-
+        console.log(err);
+        return [];
     }
 }
 

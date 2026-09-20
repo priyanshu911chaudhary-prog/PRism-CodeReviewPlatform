@@ -5,3 +5,4 @@ export default async function Home() {
   await requireAuth();
   redirect(`/dashboard`);
 }
+

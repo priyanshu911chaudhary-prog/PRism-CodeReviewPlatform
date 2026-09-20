@@ -1,10 +1,9 @@
 "use client"
 
 import React, { useState, useEffect } from "react"
-import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { BookOpen, Settings, Moon, Sun, LogOut, Code2, MessageSquare, CreditCard } from "lucide-react"
+import { BookOpen, Settings, Code2, MessageSquare, CreditCard } from "lucide-react"
 import { useTheme } from "next-themes"
 import { authClient } from "@/lib/authClient"
 
@@ -22,7 +21,6 @@ import {
     SidebarGroup,
     SidebarGroupLabel,
     SidebarGroupContent,
-    useSidebar,
 } from "@/components/ui/sidebar"
 
 import { Blobatar } from "@/components/ui/blobatar"
@@ -33,12 +31,12 @@ export const AppSidebar = () => {
     const { useSession } = authClient
     const { data: session } = useSession()
 
-    const { theme, setTheme } = useTheme()
+    const { theme } = useTheme()
     const [mounted, setMounted] = useState(false)
     const pathName = usePathname()
-    const { isMobile } = useSidebar()
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setMounted(true)
     }, [])
 

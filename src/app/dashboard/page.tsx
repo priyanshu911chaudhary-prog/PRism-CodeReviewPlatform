@@ -137,7 +137,7 @@ const MainPage=()=>{
                                 <Spinner className="size-6 text-muted-foreground" />
                             </div>
                         ) : (
-                            <ResponsiveContainer width="100%" height="100%">
+                            <ResponsiveContainer width="99%" height={300}>
                                 <BarChart data={monthyActivity || []}>
                                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="currentColor" className="opacity-10" />
                                     <XAxis dataKey="name" tickLine={false} axisLine={false} className="text-xs text-muted-foreground" />

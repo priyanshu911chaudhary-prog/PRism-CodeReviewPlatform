@@ -4,7 +4,6 @@ import React, { useMemo } from "react";
 
 import {
     Card,
-    CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
@@ -90,7 +89,7 @@ const RepositoryPage = () => {
         };
     }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-    const allRepositories = data?.pages.flatMap(page => page) || [];
+    const allRepositories = useMemo(() => data?.pages.flatMap(page => page) || [], [data?.pages]);
 
     const uniqueLanguages = useMemo(() => {
         const langs = new Set<string>();
@@ -101,7 +100,7 @@ const RepositoryPage = () => {
     }, [allRepositories]);
 
     const filteredRepositories = useMemo(() => {
-        let result = allRepositories.filter((repo: Repository) => {
+        const result = allRepositories.filter((repo: Repository) => {
             const matchesQuery = repo.full_name.toLowerCase().includes(searchQuery.toLowerCase()) || repo.name.toLowerCase().includes(searchQuery.toLowerCase());
             const matchesLanguage = language === "all" || repo.language?.toLowerCase() === language.toLowerCase();
             return matchesQuery && matchesLanguage;
@@ -198,7 +197,7 @@ const RepositoryPage = () => {
                     </Empty>
                 )}
 
-                {filteredRepositories.map((repo: any) => (
+                {filteredRepositories.map((repo: Repository) => (
                     <Card
                         key={repo.id}
                         className="hover:shadow-md transition-all duration-200 border-border/50 bg-card/50"
@@ -285,7 +284,7 @@ const RepositoryPage = () => {
 
                 {!hasNextPage && allRepositories.length > 0 && (
                     <p className="text-center text-sm text-muted-foreground mt-4">
-                        You've reached the end of your repositories.
+                        You&apos;ve reached the end of your repositories.
                     </p>
                 )}
             </div>

@@ -1,3 +1,5 @@
+export const instant = false;
+
 import LoginUI from "@/modules/auth/components/LoginUI"
 import {requireUnAuth} from "@/modules/auth/utils/authUtils"
 import { ModeToggle } from "@/lib/theme"

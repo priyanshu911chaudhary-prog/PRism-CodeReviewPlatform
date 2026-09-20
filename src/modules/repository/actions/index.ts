@@ -22,6 +22,7 @@ export const fetchRepositories = async (page: number, perPage: number) => {
 
         const connectedRepo = new Set(dbRepos.map((repo) => repo.githubId))
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return repos.map((repo: any) => {
             return {
                 ...repo,

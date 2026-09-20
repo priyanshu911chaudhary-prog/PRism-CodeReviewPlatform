@@ -35,7 +35,7 @@ const ContributionGraph = () => {
             <Empty className="my-4">
                 <EmptyTitle>No Contributions Found</EmptyTitle>
                 <EmptyDescription>
-                    We couldn't find any recent GitHub contributions.
+                    We couldn&apos;t find any recent GitHub contributions.
                 </EmptyDescription>
             </Empty>
         )

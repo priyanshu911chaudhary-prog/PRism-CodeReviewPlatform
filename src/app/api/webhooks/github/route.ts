@@ -2,7 +2,7 @@ import { NextResponse,NextRequest } from "next/server";
 
 export async function POST(request:NextRequest){
     try{
-        const body=await request.json();
+        await request.json();
         const event=request.headers.get("x-github-event");
         if(event==="ping"){
             return NextResponse.json({ message: "Pong" }, { status: 200 });

@@ -70,6 +70,7 @@ export async function fetchUserContribution(token: string, username: string) {
     // }
 
     try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const res:any = await octokit.graphql(query, { username })
         return res.user.contributionsCollection.contributionCalendar
     }catch(err){
