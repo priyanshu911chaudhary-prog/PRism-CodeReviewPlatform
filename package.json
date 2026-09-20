@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@ai-sdk/google": "^4.0.76",
     "@base-ui/react": "^1.8.0",
     "@blobatar/react": "^2.7.0",
     "@pinecone-database/pinecone": "^9.0.0",
@@ -16,6 +17,7 @@
     "@prisma/client": "^7.9.1",
     "@shadcn/react": "^0.3.1",
     "@tanstack/react-query": "^5.103.1",
+    "ai": "^7.0.107",
     "better-auth": "^1.7.5",
     "blobatar": "^2.7.0",
     "class-variance-authority": "^0.7.1",

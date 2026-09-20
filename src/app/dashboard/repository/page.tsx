@@ -56,7 +56,7 @@ const RepositoryPage = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [language, setLanguage] = useState("all");
     const [sortBy, setSortBy] = useState("stars_desc");
-    const [localConnectingId, setLocalConnectingId] = useState<number | null>(null);
+    const [localConnectingId, setLocalConnectingId] = useState<string | null>(null);
 
     const observerTarget = useRef<HTMLDivElement>(null);
 
@@ -120,7 +120,7 @@ const RepositoryPage = () => {
     }, [allRepositories, searchQuery, language, sortBy]);
 
     const handleConnect = (repo: Repository) => {
-        setLocalConnectingId(Number(repo.id));
+        setLocalConnectingId(repo.id);
         connectRepository({
             owner: repo.full_name.split('/')[0],
             repo: repo.name,
