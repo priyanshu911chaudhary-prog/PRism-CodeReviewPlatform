@@ -24,6 +24,10 @@ model User {
   repositories  Repository[]
   sessions      Session[]
 
+  usage         UserUsage?
+  subscriptionTier String @default("free")
+  subscriptionStatus String?
+
   @@map("user")
 }
 
@@ -60,6 +64,19 @@ model Review{
 
   @@index([repositoryId])
   @@map("review")
+}
+
+model UserUsage{
+  id String @id @default(uuid())
+  userId String @unique
+  user User @relation(fields:[userId], references:[id], onDelete:Cascade)
+  repositoriesCount Int @default(0)
+  reviewsCounts Json @default("{}")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("userUsage")  
 }
 
 model Session {

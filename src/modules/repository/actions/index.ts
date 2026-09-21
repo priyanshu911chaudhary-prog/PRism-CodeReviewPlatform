@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 import { createWebhook, getRepositories } from "@/modules/github/lib/github";
 import { revalidatePath } from "next/cache";
 import { inngest } from "@/inngest/client";
+import { canConnectRepository, incrementRepositoryCount } from "@/modules/payment/lib/subscription";
 export const fetchRepositories = async (page: number, perPage: number) => {
     try {
         const session = await auth.api.getSession({
@@ -42,22 +43,16 @@ export const connectRepository = async (owner: string, repo: string, githubId: n
         throw new Error("Unauthorized")
     }
 
-    //todo : check if user can connect more repo
+    const canConnect=await canConnectRepository(session.user.id)
+
+    if(!canConnect){
+        throw new Error("Cannot connect more repositories: Subscription limit reached")
+    }
 
     try {
         const webhook = await createWebhook(owner, repo);
 
-        console.log("=== CONNECT REPOSITORY DEBUG ===");
-        console.log("owner:", owner);
-        console.log("repo:", repo);
-        console.log("githubId:", githubId);
-        console.log("session.user.id:", session.user.id);
-        console.log("webhook:", webhook);
-
         if (webhook) {
-
-            console.log("webhook.created_at:", webhook.created_at);
-            console.log("webhook.updated_at:", webhook.updated_at);
 
             await prisma.repository.create({
                 data: {
@@ -71,9 +66,8 @@ export const connectRepository = async (owner: string, repo: string, githubId: n
                     updatedAt: new Date(webhook.updated_at)
                 }
             })
-        }
 
-        //todo: increment repository count for usage tracking
+            await incrementRepositoryCount(session.user.id)
 
         try{
             await inngest.send({
@@ -90,7 +84,7 @@ export const connectRepository = async (owner: string, repo: string, githubId: n
 
         revalidatePath("/dashboard/settings");
         revalidatePath("/dashboard/repository");
-
+    }
         return webhook;
     } catch (err) {
         console.log(err);

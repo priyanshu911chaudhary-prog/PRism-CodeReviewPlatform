@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/db";
 import { getDiff } from "@/modules/github/lib/github";
-import { indexCodebase } from "@/modules/ai/lib/rag";
+import { canCreateReview, incrementReviewCount } from "@/modules/payment/lib/subscription";
 import { inngest } from "@/inngest/client";
 // import { createCommitComment } from "@/modules/github/lib/github";
 
@@ -28,6 +28,12 @@ export async function reviewPullRequest(owner:string,repo:string,prNumber:number
         
         if(!repository) throw new Error(`Repository ${owner}/${repo} not found`);
 
+        const canReview=await canCreateReview(repository.userId,repository.id)
+
+        if(!canReview){
+            throw new Error(`Cannot create review: ${owner}/${repo} has reached its review limit`);
+        }
+        
         const githubAccount=repository.user.accounts[0];
 
         if(!githubAccount?.accessToken){
@@ -47,6 +53,8 @@ export async function reviewPullRequest(owner:string,repo:string,prNumber:number
                 userId:repository.user.id
             }
         })
+
+        await incrementReviewCount(repository.userId,repository.id)
 
         return {success:true,message:`PR ${title} queued for review`}
 
