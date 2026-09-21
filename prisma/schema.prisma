@@ -40,9 +40,26 @@ model Repository {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  review Review[]
 
   @@index([userId])
   @@map("repository")
+}
+
+model Review{
+  id String @id @default(uuid())
+  repositoryId String
+  repository Repository @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
+  prNumber Int
+  prTitle String
+  status String @default("completed")
+  prUrl String
+  review String @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([repositoryId])
+  @@map("review")
 }
 
 model Session {
