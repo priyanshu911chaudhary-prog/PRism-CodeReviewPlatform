@@ -43,3 +43,4 @@ next-env.d.ts
 workflow.md
 /src/generated/prisma
 AUTH_ARCHITECTURE.md
+/docs

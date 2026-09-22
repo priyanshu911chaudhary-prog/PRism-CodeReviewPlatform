@@ -91,7 +91,7 @@ export async function syncSubscriptionStatus() {
         const subscriptions = result.result?.items || [];
 
         // Find the most relevant subscription (active or most recent)
-        const activeSub = subscriptions.find((sub: any) => sub.status === 'active');
+        const activeSub = subscriptions.find((sub: { status: string; id: string }) => sub.status === 'active');
         const latestSub = subscriptions[0]; // Assuming API returns sorted or we should sort
 
         if (activeSub) {

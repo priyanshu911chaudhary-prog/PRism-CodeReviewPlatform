@@ -1,7 +1,7 @@
 "use client"
 
 import { authClient } from "@/lib/authClient"
-import { useSearchParams } from "next/navigation"
+import { useSearchParams, useRouter } from "next/navigation"
 import { useQuery } from "@tanstack/react-query"
 import { useState, useEffect } from "react"
 import { toast } from "sonner"
@@ -34,6 +34,7 @@ const PLAN_FEATURES = {
 
 export default function SubscriptionPage() {
     const { checkout, customer } = authClient;
+    const router = useRouter();
 
     const [checkoutLoading, setCheckoutLoading] = useState(false);
     const [portalLoading, setPortalLoading] = useState(false);
@@ -59,7 +60,7 @@ export default function SubscriptionPage() {
             }else{
                 toast.error(result.error || "Failed to sync subscription");
             }
-        }catch(error){
+        }catch{
             toast.error("Failed to sync subscription");
         }finally{
             setSyncLoading(false);
@@ -72,8 +73,8 @@ export default function SubscriptionPage() {
             await checkout({
                 slug:"PRism"
             });
-        } catch (err: any) {
-            toast.error(err.message || "Failed to start checkout");
+        } catch (err) {
+            toast.error(err instanceof Error ? err.message : "Failed to start checkout");
         } finally {
             setCheckoutLoading(false);
         }
@@ -83,8 +84,8 @@ export default function SubscriptionPage() {
         setPortalLoading(true);
         try {
             await customer.portal();
-        } catch (err: any) {
-            toast.error(err.message || "Failed to open portal");
+        } catch (err) {
+            toast.error(err instanceof Error ? err.message : "Failed to open portal");
         } finally {
             setPortalLoading(false);
         }
@@ -105,8 +106,8 @@ export default function SubscriptionPage() {
             } else {
                 toast.error(result.error || "Failed to downgrade subscription");
             }
-        } catch (err: any) {
-            toast.error(err.message || "Failed to downgrade subscription");
+        } catch (err) {
+            toast.error(err instanceof Error ? err.message : "Failed to downgrade subscription");
         } finally {
             setDowngradeLoading(false);
         }
@@ -163,7 +164,7 @@ export default function SubscriptionPage() {
                     <AlertCircle className="size-4" />
                     <AlertTitle>Something went wrong</AlertTitle>
                     <AlertDescription>
-                        We couldn't load your subscription data. Please try again later.
+                        We couldn&apos;t load your subscription data. Please try again later.
                         <div className="mt-4">
                             <Button variant="outline" size="sm" onClick={() => refetch()}>
                                 <RefreshCw className="mr-2 size-4" />
@@ -185,7 +186,7 @@ export default function SubscriptionPage() {
                         <CardDescription>You must be logged in to view your subscription details.</CardDescription>
                     </CardHeader>
                     <CardFooter className="justify-center">
-                        <Button onClick={() => window.location.href = '/login'}>Go to Login</Button>
+                        <Button onClick={() => router.push('/login')}>Go to Login</Button>
                     </CardFooter>
                 </Card>
             </div>

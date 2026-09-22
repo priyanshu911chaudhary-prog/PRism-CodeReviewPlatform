@@ -17,11 +17,11 @@ export async function POST(req: NextRequest) {
 
   const secret = process.env.POLAR_WEBHOOK_SECRET!;
 
-  let event: { type: string; data: Record<string, any> };
+  let event: { type: string; data: Record<string, unknown> };
   try {
     const wh = new Webhook(secret);
     event = wh.verify(body, headers) as typeof event;
-  } catch (err) {
+  } catch {
     return NextResponse.json(
       { error: "Invalid webhook signature" },
       { status: 400 }
@@ -94,7 +94,7 @@ export async function POST(req: NextRequest) {
       default:
         break;
     }
-  } catch (err) {
+  } catch {
     return NextResponse.json(
       { error: "Webhook processing failed" },
       { status: 500 }

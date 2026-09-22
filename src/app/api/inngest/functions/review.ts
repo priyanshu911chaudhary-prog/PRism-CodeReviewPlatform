@@ -12,7 +12,7 @@ export const generateReview=inngest.createFunction({
     triggers:{
         event: "pr.review.requested"
     }
-}, async({event,step}:any)=>{
+}, async({event,step})=>{
         const {owner,repo,prNumber,userId}=event.data;
         const {diff,title,description,token}=await step.run("fetch-pr-data",async()=>{
             const account=await prisma.account.findFirst({

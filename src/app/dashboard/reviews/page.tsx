@@ -21,7 +21,17 @@ import { getReview } from "@/modules/review/actions";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-function ReviewCardItem({ review }: { review: any }) {
+interface ReviewType {
+  id: string;
+  repository?: { name: string };
+  status: string;
+  createdAt: string | Date;
+  prUrl?: string;
+  prTitle?: string;
+  review?: string;
+}
+
+function ReviewCardItem({ review }: { review: ReviewType }) {
 
     return (
         <Card className="hover:shadow-md transition-all duration-200 border-border/50 bg-card overflow-hidden">
@@ -138,7 +148,7 @@ export default function ReviewPage() {
 
             {!isLoading && !error && reviews && reviews.length > 0 && (
                 <div className="grid gap-6">
-                    {reviews.map((review: any) => (
+                    {reviews.map((review: ReviewType) => (
                         <ReviewCardItem key={review.id} review={review} />
                     ))}
                 </div>
