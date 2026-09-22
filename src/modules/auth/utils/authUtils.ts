@@ -6,9 +6,15 @@ import {redirect} from "next/navigation"
 
 export const requireAuth=async()=>{
 
-    const session=await auth.api.getSession({
-        headers:await headers()
-    })
+    let session;
+    try {
+        session=await auth.api.getSession({
+            headers:await headers()
+        })
+    } catch (err) {
+        console.error("[requireAuth] Failed to get session:", err);
+        session = null;
+    }
 
     if(!session){
         redirect("/login")
@@ -19,9 +25,15 @@ export const requireAuth=async()=>{
 
 export const requireUnAuth=async()=>{
     
-    const session=await auth.api.getSession({
-        headers:await headers()
-    })
+    let session;
+    try {
+        session=await auth.api.getSession({
+            headers:await headers()
+        })
+    } catch (err) {
+        console.error("[requireUnAuth] Failed to get session:", err);
+        session = null;
+    }
 
     if(session){
         redirect("/")

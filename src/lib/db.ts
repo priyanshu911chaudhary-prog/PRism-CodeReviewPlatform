@@ -1,8 +1,14 @@
 import {PrismaClient} from "@/generated/prisma/client"
 import {PrismaPg} from "@prisma/adapter-pg"
 
+// Extend connect timeout for Neon free-tier cold starts (default 5s is too short)
+const dbUrl = process.env.DATABASE_URL || "";
+const connectionString = dbUrl.includes("?")
+    ? `${dbUrl}&connect_timeout=30`
+    : `${dbUrl}?connect_timeout=30`;
+
 const adapter=new PrismaPg({
-    connectionString:process.env.DATABASE_URL
+    connectionString
 })
 
 const prismaClientSingleton=()=>{

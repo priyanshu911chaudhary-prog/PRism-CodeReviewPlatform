@@ -23,6 +23,13 @@ export const getGithubToken = async () => {
         if (!account.accessToken) {
             throw new Error("No github access token found")
         }
+
+        // GitHub App tokens expire — detect early instead of getting a cryptic 401
+        if (account.accessTokenExpiresAt && new Date(account.accessTokenExpiresAt) < new Date()) {
+            console.error("[getGithubToken] GitHub access token has expired. User needs to re-authenticate.");
+            throw new Error("GitHub access token has expired — user needs to re-authenticate")
+        }
+
         return account.accessToken
     } catch (err) {
         console.log(err)

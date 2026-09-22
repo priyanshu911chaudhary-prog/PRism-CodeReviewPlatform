@@ -113,3 +113,45 @@ export async function syncSubscriptionStatus() {
         return { success: false, error: "Failed to sync with Polar" };
     }
 }
+
+export async function cancelSubscription() {
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    });
+
+    if (!session?.user) {
+        return { success: false, error: "Not authenticated" };
+    }
+
+    const user = await prisma.user.findUnique({
+        where: { id: session.user.id },
+    });
+
+    if (!user) {
+        return { success: false, error: "User not found" };
+    }
+
+    if (!user.polarSubscriptionId) {
+        // No active Polar subscription — just reset the tier locally
+        await updateUserTier(user.id, "FREE", "CANCELED");
+        return { success: true, message: "Downgraded to Free" };
+    }
+
+    try {
+        // Cancel subscription at the end of the current billing period via Polar API
+        await polarClient.subscriptions.update({
+            id: user.polarSubscriptionId,
+            subscriptionUpdate: {
+                cancelAtPeriodEnd: true,
+            },
+        });
+
+        // Update local DB — mark as canceled (will be fully revoked by webhook when period ends)
+        await updateUserTier(user.id, "FREE", "CANCELED", user.polarSubscriptionId);
+
+        return { success: true, message: "Subscription will be canceled at end of billing period" };
+    } catch (error) {
+        console.error("[cancelSubscription] Failed to cancel via Polar:", error);
+        return { success: false, error: "Failed to cancel subscription. Please try again or use the billing portal." };
+    }
+}

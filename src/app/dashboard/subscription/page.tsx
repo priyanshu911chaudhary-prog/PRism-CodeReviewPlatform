@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation"
 import { useQuery } from "@tanstack/react-query"
 import { useState, useEffect } from "react"
 import { toast } from "sonner"
-import { getSubscriptionData, syncSubscriptionStatus } from "@/modules/payment/action"
+import { getSubscriptionData, syncSubscriptionStatus, cancelSubscription } from "@/modules/payment/action"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -38,6 +38,7 @@ export default function SubscriptionPage() {
     const [checkoutLoading, setCheckoutLoading] = useState(false);
     const [portalLoading, setPortalLoading] = useState(false);
     const [syncLoading, setSyncLoading] = useState(false);
+    const [downgradeLoading, setDowngradeLoading] = useState(false);
     
     const searchParams = useSearchParams();
     const success = searchParams.get("success");
@@ -86,6 +87,28 @@ export default function SubscriptionPage() {
             toast.error(err.message || "Failed to open portal");
         } finally {
             setPortalLoading(false);
+        }
+    };
+
+    const handleDowngrade = async () => {
+        const confirmed = window.confirm(
+            "Are you sure you want to downgrade to the Free plan? Your Pro features will remain active until the end of your current billing period."
+        );
+        if (!confirmed) return;
+
+        setDowngradeLoading(true);
+        try {
+            const result = await cancelSubscription();
+            if (result.success) {
+                toast.success(result.message || "Successfully downgraded to Free plan");
+                refetch();
+            } else {
+                toast.error(result.error || "Failed to downgrade subscription");
+            }
+        } catch (err: any) {
+            toast.error(err.message || "Failed to downgrade subscription");
+        } finally {
+            setDowngradeLoading(false);
         }
     };
 
@@ -277,8 +300,17 @@ export default function SubscriptionPage() {
                             </ul>
                         </CardContent>
                         <CardFooter>
-                            <Button className="w-full" variant={!isPro ? "secondary" : "outline"} disabled={!isPro}>
-                                {!isPro ? "Current Plan" : "Downgrade to Free"}
+                            <Button
+                                className="w-full"
+                                variant={!isPro ? "secondary" : "destructive"}
+                                disabled={!isPro || downgradeLoading}
+                                onClick={isPro ? handleDowngrade : undefined}
+                            >
+                                {!isPro
+                                    ? "Current Plan"
+                                    : downgradeLoading
+                                        ? "Cancelling..."
+                                        : "Downgrade to Free"}
                             </Button>
                         </CardFooter>
                     </Card>
