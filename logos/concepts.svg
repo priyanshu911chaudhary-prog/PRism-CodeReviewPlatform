@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1600" height="984" viewBox="0 0 1600 984"><defs><filter id="grey"><feColorMatrix type="saturate" values="0"/></filter></defs><rect width="1600" height="984" fill="#f7f7f4"/><text x="60" y="78" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="40" font-weight="700" fill="#161616">Logo concepts</text><text x="60" y="116" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="20" fill="#6b6b6b">Concepts for review — pick a direction (or tell me what you like in each).</text><rect x="60" y="150" width="474.667" height="774" rx="18" fill="#fff" stroke="#161616" stroke-width="2"/><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="90" y="190" width="414.667" height="300" preserveAspectRatio="xMidYMid meet">
+  <path d="M 128,24 L 218,76 L 218,180 L 128,232 L 38,180 L 38,76 Z" fill="none" stroke="#000" stroke-width="24" stroke-linejoin="round"/>
+  <path d="M 128,128 L 38,76" fill="none" stroke="#000" stroke-width="24"/>
+  <path d="M 128,128 L 218,76" fill="none" stroke="#000" stroke-width="24"/>
+  <path d="M 128,128 L 128,232" fill="none" stroke="#000" stroke-width="24"/>
+  <circle cx="128" cy="128" r="32" fill="#fff" stroke="#000" stroke-width="24"/>
+</svg></g><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 256" x="90" y="514" width="414.667" height="120" preserveAspectRatio="xMidYMid meet">
+  <g transform="translate(0, 0)">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <path d="M 128,24 L 218,76 L 218,180 L 128,232 L 38,180 L 38,76 Z" fill="none" stroke="#000" stroke-width="24" stroke-linejoin="round"/>
+  <path d="M 128,128 L 38,76" fill="none" stroke="#000" stroke-width="24"/>
+  <path d="M 128,128 L 218,76" fill="none" stroke="#000" stroke-width="24"/>
+  <path d="M 128,128 L 128,232" fill="none" stroke="#000" stroke-width="24"/>
+  <circle cx="128" cy="128" r="32" fill="#fff" stroke="#000" stroke-width="24"/>
+</svg>
+  </g>
+  <text x="280" y="172" font-family="system-ui, -apple-system, sans-serif" font-size="120" font-weight="800" fill="#000" letter-spacing="-2">PR<tspan font-weight="400">ism</tspan></text>
+</svg></g><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="90" y="660" width="64" height="64" preserveAspectRatio="xMidYMid meet">
+  <path d="M 128,24 L 218,76 L 218,180 L 128,232 L 38,180 L 38,76 Z" fill="none" stroke="#000" stroke-width="24" stroke-linejoin="round"/>
+  <path d="M 128,128 L 38,76" fill="none" stroke="#000" stroke-width="24"/>
+  <path d="M 128,128 L 218,76" fill="none" stroke="#000" stroke-width="24"/>
+  <path d="M 128,128 L 128,232" fill="none" stroke="#000" stroke-width="24"/>
+  <circle cx="128" cy="128" r="32" fill="#fff" stroke="#000" stroke-width="24"/>
+</svg></g><text x="122" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">64px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="180" y="692" width="32" height="32" preserveAspectRatio="xMidYMid meet">
+  <path d="M 128,24 L 218,76 L 218,180 L 128,232 L 38,180 L 38,76 Z" fill="none" stroke="#000" stroke-width="24" stroke-linejoin="round"/>
+  <path d="M 128,128 L 38,76" fill="none" stroke="#000" stroke-width="24"/>
+  <path d="M 128,128 L 218,76" fill="none" stroke="#000" stroke-width="24"/>
+  <path d="M 128,128 L 128,232" fill="none" stroke="#000" stroke-width="24"/>
+  <circle cx="128" cy="128" r="32" fill="#fff" stroke="#000" stroke-width="24"/>
+</svg></g><text x="196" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">32px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="238" y="708" width="16" height="16" preserveAspectRatio="xMidYMid meet">
+  <path d="M 128,24 L 218,76 L 218,180 L 128,232 L 38,180 L 38,76 Z" fill="none" stroke="#000" stroke-width="24" stroke-linejoin="round"/>
+  <path d="M 128,128 L 38,76" fill="none" stroke="#000" stroke-width="24"/>
+  <path d="M 128,128 L 218,76" fill="none" stroke="#000" stroke-width="24"/>
+  <path d="M 128,128 L 128,232" fill="none" stroke="#000" stroke-width="24"/>
+  <circle cx="128" cy="128" r="32" fill="#fff" stroke="#000" stroke-width="24"/>
+</svg></g><text x="246" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">16px</text><text x="90.0" y="780" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#161616">A · The Cube Eye</text><text x="90.0" y="808" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="15" font-weight="700" fill="#161616" letter-spacing="1.5">RECOMMENDED</text><text x="90.0" y="842" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">An isometric cube with an eye, combining</text><text x="90.0" y="868" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">code structure and AI review.</text><rect x="562.667" y="150" width="474.667" height="774" rx="18" fill="#fff" stroke="#e4e4e0" stroke-width="1"/><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="592.667" y="190" width="414.667" height="300" preserveAspectRatio="xMidYMid meet">
+  <path d="M 52,112 L 128,36 L 204,112" fill="none" stroke="#000" stroke-width="28" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 52,144 L 128,220 L 204,144" fill="none" stroke="#000" stroke-width="28" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="128" cy="128" r="24" fill="#000"/>
+</svg></g><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 256" x="592.667" y="514" width="414.667" height="120" preserveAspectRatio="xMidYMid meet">
+  <g transform="translate(0, 0)">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <path d="M 52,112 L 128,36 L 204,112" fill="none" stroke="#000" stroke-width="28" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 52,144 L 128,220 L 204,144" fill="none" stroke="#000" stroke-width="28" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="128" cy="128" r="24" fill="#000"/>
+</svg>
+  </g>
+  <text x="280" y="172" font-family="system-ui, -apple-system, sans-serif" font-size="120" font-weight="800" fill="#000" letter-spacing="-2">PR<tspan font-weight="400">ism</tspan></text>
+</svg></g><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="592.667" y="660" width="64" height="64" preserveAspectRatio="xMidYMid meet">
+  <path d="M 52,112 L 128,36 L 204,112" fill="none" stroke="#000" stroke-width="28" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 52,144 L 128,220 L 204,144" fill="none" stroke="#000" stroke-width="28" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="128" cy="128" r="24" fill="#000"/>
+</svg></g><text x="624.667" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">64px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="682.667" y="692" width="32" height="32" preserveAspectRatio="xMidYMid meet">
+  <path d="M 52,112 L 128,36 L 204,112" fill="none" stroke="#000" stroke-width="28" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 52,144 L 128,220 L 204,144" fill="none" stroke="#000" stroke-width="28" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="128" cy="128" r="24" fill="#000"/>
+</svg></g><text x="698.667" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">32px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="740.667" y="708" width="16" height="16" preserveAspectRatio="xMidYMid meet">
+  <path d="M 52,112 L 128,36 L 204,112" fill="none" stroke="#000" stroke-width="28" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 52,144 L 128,220 L 204,144" fill="none" stroke="#000" stroke-width="28" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="128" cy="128" r="24" fill="#000"/>
+</svg></g><text x="748.667" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">16px</text><text x="592.6666666666667" y="780" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#161616">B · The Code Diamond</text><text x="592.6666666666667" y="814" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">Code brackets forming a prism holding an AI</text><text x="592.6666666666667" y="840" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">lens.</text><rect x="1065.33" y="150" width="474.667" height="774" rx="18" fill="#fff" stroke="#e4e4e0" stroke-width="1"/><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="1095.33" y="190" width="414.667" height="300" preserveAspectRatio="xMidYMid meet">
+  <polygon points="128,40 216,192 40,192" fill="none" stroke="#000" stroke-width="24" stroke-linejoin="round"/>
+  <path d="M 88,144 L 128,184 L 224,88" fill="none" stroke="#000" stroke-width="24" stroke-linejoin="round" stroke-linecap="round"/>
+</svg></g><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 256" x="1095.33" y="514" width="414.667" height="120" preserveAspectRatio="xMidYMid meet">
+  <g transform="translate(0, 0)">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <polygon points="128,40 216,192 40,192" fill="none" stroke="#000" stroke-width="24" stroke-linejoin="round"/>
+  <path d="M 88,144 L 128,184 L 224,88" fill="none" stroke="#000" stroke-width="24" stroke-linejoin="round" stroke-linecap="round"/>
+</svg>
+  </g>
+  <text x="280" y="172" font-family="system-ui, -apple-system, sans-serif" font-size="120" font-weight="800" fill="#000" letter-spacing="-2">PR<tspan font-weight="400">ism</tspan></text>
+</svg></g><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="1095.33" y="660" width="64" height="64" preserveAspectRatio="xMidYMid meet">
+  <polygon points="128,40 216,192 40,192" fill="none" stroke="#000" stroke-width="24" stroke-linejoin="round"/>
+  <path d="M 88,144 L 128,184 L 224,88" fill="none" stroke="#000" stroke-width="24" stroke-linejoin="round" stroke-linecap="round"/>
+</svg></g><text x="1127.33" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">64px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="1185.33" y="692" width="32" height="32" preserveAspectRatio="xMidYMid meet">
+  <polygon points="128,40 216,192 40,192" fill="none" stroke="#000" stroke-width="24" stroke-linejoin="round"/>
+  <path d="M 88,144 L 128,184 L 224,88" fill="none" stroke="#000" stroke-width="24" stroke-linejoin="round" stroke-linecap="round"/>
+</svg></g><text x="1201.33" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">32px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="1243.33" y="708" width="16" height="16" preserveAspectRatio="xMidYMid meet">
+  <polygon points="128,40 216,192 40,192" fill="none" stroke="#000" stroke-width="24" stroke-linejoin="round"/>
+  <path d="M 88,144 L 128,184 L 224,88" fill="none" stroke="#000" stroke-width="24" stroke-linejoin="round" stroke-linecap="round"/>
+</svg></g><text x="1251.33" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">16px</text><text x="1095.3333333333335" y="780" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#161616">C · The Verified Prism</text><text x="1095.3333333333335" y="814" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">A refracted checkmark breaking out of a</text><text x="1095.3333333333335" y="840" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">geometric prism.</text></svg>

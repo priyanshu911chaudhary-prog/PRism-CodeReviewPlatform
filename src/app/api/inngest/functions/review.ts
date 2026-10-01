@@ -39,7 +39,7 @@ export const generateReview=inngest.createFunction({
 
                 PR Title: ${title}
                 PR Description: ${description}
-                Diff: ${diff.diff}
+                Diff: ${diff}
 
                 Context from codebase:
                 ${context.join("\n\n")}

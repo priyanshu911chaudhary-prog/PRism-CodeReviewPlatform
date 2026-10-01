@@ -26,7 +26,8 @@ import {
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Blobatar } from "@/components/ui/blobatar";
 
 export function ProfilePage() {
     const queryClient = useQueryClient()
@@ -76,17 +77,17 @@ export function ProfilePage() {
                     <CardDescription>Manage your public profile and personal details</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="animate-pulse space-y-6">
+                    <div className="space-y-6">
                         <div className="flex items-center gap-6">
-                            <div className="h-20 w-20 bg-muted rounded-full"></div>
+                            <Skeleton className="h-20 w-20 rounded-full" />
                             <div className="space-y-2">
-                                <div className="h-5 w-32 bg-muted rounded"></div>
-                                <div className="h-4 w-48 bg-muted rounded"></div>
+                                <Skeleton className="h-5 w-32" />
+                                <Skeleton className="h-4 w-48" />
                             </div>
                         </div>
                         <div className="grid gap-4 md:grid-cols-2">
-                            <div className="h-10 bg-muted rounded"></div>
-                            <div className="h-10 bg-muted rounded"></div>
+                            <Skeleton className="h-10" />
+                            <Skeleton className="h-10" />
                         </div>
                     </div>
                 </CardContent>
@@ -107,10 +108,12 @@ export function ProfilePage() {
             <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-8">
                     <div className="flex items-center gap-6">
-                        <Avatar className="h-20 w-20 border shadow-sm">
-                            <AvatarImage src={profile?.image || undefined} alt={name} />
-                            <AvatarFallback className="text-xl bg-primary/10 text-primary font-semibold">{userInitials}</AvatarFallback>
-                        </Avatar>
+                        <Blobatar 
+                            name={profile?.id || name || "User"}
+                            src={profile?.image || undefined}
+                            title={name || "Profile"}
+                            className="h-20 w-20 border shadow-sm rounded-full"
+                        />
                         <div className="space-y-1.5">
                             <h3 className="font-medium text-lg leading-none">Profile Picture</h3>
                             <p className="text-sm text-muted-foreground">This is synced with your connected GitHub account.</p>
@@ -127,6 +130,7 @@ export function ProfilePage() {
                                 onChange={(e) => setName(e.target.value)}
                                 disabled={updateMutation.isPending}
                                 className="bg-muted/50"
+                                required
                             />
                         </div>
                         <div className="space-y-2">
@@ -137,9 +141,13 @@ export function ProfilePage() {
                                 placeholder="john@example.com"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                disabled={updateMutation.isPending}
-                                className="bg-muted/50"
+                                disabled={true}
+                                className="bg-muted/50 cursor-not-allowed opacity-70"
+                                required
                             />
+                            <p className="text-xs text-muted-foreground">
+                                Your email is synced with your connected GitHub account and cannot be changed here.
+                            </p>
                         </div>
                     </div>
 

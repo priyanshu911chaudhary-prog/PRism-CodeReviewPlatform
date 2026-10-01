@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256"><title>PRism</title><rect width="256" height="256" rx="57.6" fill="#000"/><g transform="translate(30.34 30.34) scale(0.763)" fill="#ffffff">
+  <path d="M 128,24 L 218,76 L 218,180 L 128,232 L 38,180 L 38,76 Z" fill="none" stroke="#ffffff" stroke-width="24" stroke-linejoin="round"/>
+  <path d="M 90,106 L 38,76 M 166,106 L 218,76 M 128,172 L 128,232" fill="none" stroke="#ffffff" stroke-width="24" stroke-linecap="round"/>
+  <circle cx="128" cy="128" r="32" fill="none" stroke="#ffffff" stroke-width="24"/>
+</g></svg>

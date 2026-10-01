@@ -1,0 +1,30 @@
+{
+  "brand": "PRism",
+  "tagline": "AI-powered pull request review",
+  "brief": "A PR review and remediation platform for developers. Minimal, geometric, and works perfectly in light/dark mode.",
+  "adjectives": ["structural", "intelligent", "geometric", "clean"],
+  "industry": "dev-tool",
+  "brand_color": "#7C3AED",
+  "greyscale": false,
+  "designer": "Antigravity",
+  "round": 2,
+  "concepts": [
+    {
+      "name": "The Cube Eye",
+      "symbol": "kit/final-symbol.svg",
+      "lockup": "kit/final-horizontal.svg",
+      "idea": "An isometric cube holding an eye, combining geometric code structure with AI review.",
+      "rationale": [
+        "Highly geometric and crisp at 16px size.",
+        "Draws strictly in one color, adapting effortlessly to IDE themes.",
+        "Central 'eye' signifies the AI review process."
+      ]
+    }
+  ],
+  "recommendation": "Finalized logo kit delivery.",
+  "next_steps": [
+    "Implement the favicon and web app manifest",
+    "Replace existing text-based branding in the Next.js app",
+    "Update social media assets using the provided PNGs"
+  ]
+}

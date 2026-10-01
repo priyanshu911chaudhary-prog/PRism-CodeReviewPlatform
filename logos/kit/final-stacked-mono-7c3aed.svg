@@ -1,0 +1,8 @@
+<svg fill="#7c3aed" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 480"><title>PRism</title>
+  <g transform="translate(72, 40)">
+    <path d="M 128,24 L 218,76 L 218,180 L 128,232 L 38,180 L 38,76 Z" fill="none" stroke="#7c3aed" stroke-width="24" stroke-linejoin="round"/>
+    <path d="M 90,106 L 38,76 M 166,106 L 218,76 M 128,172 L 128,232" fill="none" stroke="#7c3aed" stroke-width="24" stroke-linecap="round"/>
+    <circle cx="128" cy="128" r="32" fill="none" stroke="#7c3aed" stroke-width="24"/>
+  </g>
+  <text x="200" y="380" font-family="system-ui, -apple-system, sans-serif" font-size="100" font-weight="700" letter-spacing="-0.02em" fill="#7c3aed" text-anchor="middle">PRism</text>
+</svg>

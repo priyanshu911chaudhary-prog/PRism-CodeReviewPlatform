@@ -20,6 +20,9 @@ export const auth = betterAuth({
     "http://localhost:3000",
     "https://sympathy-cause-jaywalker.ngrok-free.dev",
   ],
+  emailAndPassword: {
+    enabled: process.env.NEXT_PUBLIC_DEMO_MODE === "true",
+  },
   plugins: [
     polar({
       client: polarClient,

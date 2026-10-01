@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 256">
+  <g transform="translate(0, 0)">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <path d="M 52,112 L 128,36 L 204,112" fill="none" stroke="#000" stroke-width="28" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 52,144 L 128,220 L 204,144" fill="none" stroke="#000" stroke-width="28" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="128" cy="128" r="24" fill="#000"/>
+</svg>
+  </g>
+  <text x="280" y="172" font-family="system-ui, -apple-system, sans-serif" font-size="120" font-weight="800" fill="#000" letter-spacing="-2">PR<tspan font-weight="400">ism</tspan></text>
+</svg>

@@ -40,6 +40,9 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Empty, EmptyTitle, EmptyDescription } from "@/components/ui/empty";
+import { ErrorState } from "@/components/ErrorState";
 
 import { useState } from "react";
 
@@ -100,47 +103,26 @@ export function RepositoryList() {
                 </CardHeader>
 
                 <CardContent>
-                    <div className="animate-pulse space-y-4">
-                        <div className="h-20 bg-muted rounded"></div>
-                        <div className="h-20 bg-muted rounded"></div>
+                    <div className="space-y-4">
+                        <Skeleton className="h-20" />
+                        <Skeleton className="h-20" />
                     </div>
                 </CardContent>
             </Card>
         )
     }
     if (error) {
-        return (
-            <Card className="border-destructive/50">
-                <CardHeader>
-                    <CardTitle className="text-destructive flex items-center gap-2">
-                        <AlertTriangle className="h-5 w-5" />
-                        Error Loading Repositories
-                    </CardTitle>
-                    <CardDescription>{error.message}</CardDescription>
-                </CardHeader>
-            </Card>
-        )
+        return <ErrorState title="Error Loading Repositories" message={error.message} />
     }
 
     if (repositories?.length === 0) {
         return (
-            <Card>
-                <CardHeader>
-                    <CardTitle>Connected Repositories</CardTitle>
-                    <CardDescription>
-                        Manage your connected GitHub repositories
-                    </CardDescription>
-                </CardHeader>
-                <CardContent className="flex flex-col items-center justify-center py-8 text-center">
-                    <div className="rounded-full bg-muted p-3 mb-4">
-                        <ExternalLink className="h-6 w-6 text-muted-foreground" />
-                    </div>
-                    <p className="text-lg font-medium">No repositories connected</p>
-                    <p className="text-sm text-muted-foreground mt-1 max-w-sm">
-                        You haven&apos;t connected any GitHub repositories yet. Go to the Repositories page to connect one.
-                    </p>
-                </CardContent>
-            </Card>
+            <Empty className="my-8">
+                <EmptyTitle>No repositories connected</EmptyTitle>
+                <EmptyDescription>
+                    You haven&apos;t connected any GitHub repositories yet. Go to the Repositories page to connect one.
+                </EmptyDescription>
+            </Empty>
         )
     }
 
@@ -197,7 +179,7 @@ export function RepositoryList() {
                             <div className="flex flex-col gap-1.5 min-w-0">
                                 <div className="font-medium leading-none flex items-center gap-2">
                                     <span className="truncate">{repo.name}</span>
-                                    <Badge variant="outline" className="text-[10px] uppercase h-5 px-1.5 bg-secondary/20 shrink-0">
+                                    <Badge variant="outline" className="text-[10px] uppercase h-5 px-1.5 bg-success/10 text-success border-success/20 shrink-0">
                                         Connected
                                     </Badge>
                                 </div>
@@ -207,8 +189,8 @@ export function RepositoryList() {
                             </div>
                             <div className="flex items-center gap-2 shrink-0">
                                 <Button variant="outline" size="icon" asChild className="h-8 w-8">
-                                    <a href={repo.url} target="_blank" rel="noopener noreferrer" title="View on GitHub">
-                                        <ExternalLink className="h-4 w-4" />
+                                    <a href={repo.url} target="_blank" rel="noopener noreferrer" aria-label={`View ${repo.name} on GitHub`}>
+                                        <ExternalLink className="h-4 w-4 text-muted-foreground" />
                                     </a>
                                 </Button>
                                 <AlertDialog>

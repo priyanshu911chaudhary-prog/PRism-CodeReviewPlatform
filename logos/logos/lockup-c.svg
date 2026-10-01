@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 256">
+  <g transform="translate(0, 0)">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <polygon points="128,40 216,192 40,192" fill="none" stroke="#000" stroke-width="24" stroke-linejoin="round"/>
+  <path d="M 88,144 L 128,184 L 224,88" fill="none" stroke="#000" stroke-width="24" stroke-linejoin="round" stroke-linecap="round"/>
+</svg>
+  </g>
+  <text x="280" y="172" font-family="system-ui, -apple-system, sans-serif" font-size="120" font-weight="800" fill="#000" letter-spacing="-2">PR<tspan font-weight="400">ism</tspan></text>
+</svg>

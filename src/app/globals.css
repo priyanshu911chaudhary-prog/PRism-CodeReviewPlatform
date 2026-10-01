@@ -72,6 +72,13 @@
   --shadow-opacity: var(--shadow-opacity);
   --color-shadow-color: var(--shadow-color);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-gradient-pro-from: var(--gradient-pro-from);
+  --color-gradient-pro-to: var(--gradient-pro-to);
+  --color-primary-text: var(--primary-text);
 }
 
 :root {
@@ -83,13 +90,13 @@
   --popover-foreground: oklch(0.4386 0 0);
   --primary: oklch(0.7175 0.1039 251.4993);
   --primary-foreground: oklch(0.2500 0.0112 254.0422);
-  --secondary: oklch(0.9940 0 0);
+  --secondary: oklch(0.9550 0 0);
   --secondary-foreground: oklch(0.2046 0 0);
   --muted: oklch(0.9461 0 0);
   --muted-foreground: oklch(0.2435 0 0);
   --accent: oklch(0.9461 0 0);
   --accent-foreground: oklch(0.2435 0 0);
-  --destructive: oklch(0.7889 0.1837 120.0068);
+  --destructive: oklch(0.5770 0.2450 27.33);
   --border: oklch(0.9037 0 0);
   --input: oklch(0.9731 0 0);
   --ring: oklch(0.7175 0.1039 251.4993);
@@ -107,7 +114,14 @@
   --sidebar-accent-foreground: oklch(0.2435 0 0);
   --sidebar-border: oklch(0.9037 0 0);
   --sidebar-ring: oklch(0.7175 0.1039 251.4993);
-  --destructive-foreground: oklch(0.9992 0.0039 106.4705);
+  --destructive-foreground: oklch(0.9850 0 0);
+  --success: oklch(0.7200 0.1900 142);
+  --success-foreground: oklch(0.2500 0.0500 142);
+  --warning: oklch(0.8000 0.1500 85);
+  --warning-foreground: oklch(0.3000 0.0500 85);
+  --gradient-pro-from: oklch(0.5500 0.2500 295);
+  --gradient-pro-to: oklch(0.6500 0.2500 330);
+  --primary-text: oklch(0.5000 0.1100 258);
   --font-sans: Outfit, sans-serif;
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono: monospace;
@@ -137,15 +151,15 @@
   --card-foreground: oklch(0.9232 0.0206 311.0782);
   --popover: oklch(0.2603 0 0);
   --popover-foreground: oklch(0.7348 0 0);
-  --primary: oklch(0.2951 0.1102 258.2021);
+  --primary: oklch(0.4000 0.1100 258);
   --primary-foreground: oklch(0.9107 0.0098 252.8160);
-  --secondary: oklch(0.2603 0 0);
+  --secondary: oklch(0.2800 0 0);
   --secondary-foreground: oklch(0.9851 0 0);
   --muted: oklch(0.2393 0 0);
   --muted-foreground: oklch(0.7122 0 0);
   --accent: oklch(0.3132 0 0);
   --accent-foreground: oklch(0.9851 0 0);
-  --destructive: oklch(0.4262 0.0846 115.5674);
+  --destructive: oklch(0.7040 0.1910 22.22);
   --border: oklch(0.2809 0 0);
   --input: oklch(0.2603 0 0);
   --ring: oklch(0.6979 0.1185 237.1682);
@@ -162,7 +176,14 @@
   --sidebar-accent-foreground: oklch(0.9851 0 0);
   --sidebar-border: oklch(0.2809 0 0);
   --sidebar-ring: oklch(0.6979 0.1185 237.1682);
-  --destructive-foreground: oklch(0.9439 0.0067 115.7091);
+  --destructive-foreground: oklch(0.9850 0 0);
+  --success: oklch(0.6500 0.1900 142);
+  --success-foreground: oklch(0.9500 0.0200 142);
+  --warning: oklch(0.7000 0.1500 85);
+  --warning-foreground: oklch(0.9500 0.0200 85);
+  --gradient-pro-from: oklch(0.4500 0.2500 295);
+  --gradient-pro-to: oklch(0.5500 0.2500 330);
+  --primary-text: oklch(0.8500 0.1100 258);
   --radius: 0.5rem;
   --font-sans: Outfit, sans-serif;
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;

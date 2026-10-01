@@ -44,3 +44,4 @@ workflow.md
 /src/generated/prisma
 AUTH_ARCHITECTURE.md
 /docs
+/.agent

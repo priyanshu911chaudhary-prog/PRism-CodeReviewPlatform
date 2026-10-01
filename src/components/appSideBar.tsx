@@ -1,14 +1,15 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
+import React from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { BookOpen, Settings, Code2, MessageSquare, CreditCard } from "lucide-react"
+import { usePathname, useRouter } from "next/navigation"
+import { BookOpen, Settings, Code2, MessageSquare, CreditCard, ChevronUp, User, LogOut, Sun, Moon, Laptop } from "lucide-react"
 import { useTheme } from "next-themes"
 import { authClient } from "@/lib/authClient"
 
 import { GithubDark } from "@/components/ui/svgs/githubDark"
 import { GithubLight } from "@/components/ui/svgs/githubLight"
+import { LogoSymbol } from "@/components/Logo"
 
 import {
     Sidebar,
@@ -24,21 +25,25 @@ import {
 } from "@/components/ui/sidebar"
 
 import { Blobatar } from "@/components/ui/blobatar"
-
-
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuPortal,
+    DropdownMenuSeparator,
+    DropdownMenuSub,
+    DropdownMenuSubContent,
+    DropdownMenuSubTrigger,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 export const AppSidebar = () => {
     const { useSession } = authClient
     const { data: session } = useSession()
-
-    const { theme } = useTheme()
-    const [mounted, setMounted] = useState(false)
+    const { setTheme } = useTheme()
     const pathName = usePathname()
-
-    useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setMounted(true)
-    }, [])
+    const router = useRouter()
 
     const navigationItems = [
         {
@@ -72,12 +77,23 @@ export const AppSidebar = () => {
         return pathName === url || (url !== "/dashboard" && pathName.startsWith(url))
     }
 
-    if (!mounted || !session) return null
+    const handleLogout = async () => {
+        await authClient.signOut({
+            fetchOptions: {
+                onSuccess: () => {
+                    router.push("/login")
+                },
+            },
+        })
+    }
+
+    if (!session) {
+        return null // Will implement a skeleton placeholder later if needed
+    }
 
     const user = session.user
     const userName = user.name || "Guest"
     const userEmail = user.email || ""
-
 
     return (
         <Sidebar variant="sidebar" collapsible="icon">
@@ -86,9 +102,7 @@ export const AppSidebar = () => {
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
                             <Link href="/dashboard">
-                                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground shrink-0">
-                                    {theme === "dark" ? <GithubDark className="size-4" /> : <GithubLight className="size-4" />}
-                                </div>
+                                <LogoSymbol className="!size-8 text-primary shrink-0" />
                                 <div className="grid flex-1 text-left text-sm leading-tight">
                                     <span className="truncate font-semibold">PRism</span>
                                     <span className="truncate text-xs">Code Review Platform</span>
@@ -126,19 +140,67 @@ export const AppSidebar = () => {
             <SidebarFooter>
                 <SidebarMenu>
                     <SidebarMenuItem>
-                        <SidebarMenuButton
-                            size="lg"
-                            className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                        >
-                            <Blobatar 
-                                name={userName || userEmail || "User"} 
-                                className="h-8 w-8 rounded-lg shrink-0"
-                            />
-                            <div className="grid flex-1 text-left text-sm leading-tight">
-                                <span className="truncate font-semibold">{userName}</span>
-                                <span className="truncate text-xs text-sidebar-foreground/70">{userEmail}</span>
-                            </div>
-                        </SidebarMenuButton>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <SidebarMenuButton
+                                    size="lg"
+                                    className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                                >
+                                    <Blobatar 
+                                        name={user.id}
+                                        src={user.image || undefined}
+                                        blobatar={{
+                                            title: userName,
+                                            animate: "hover"
+                                        }}
+                                        className="h-8 w-8 rounded-lg shrink-0"
+                                    />
+                                    <div className="grid flex-1 text-left text-sm leading-tight">
+                                        <span className="truncate font-semibold">{userName}</span>
+                                        <span className="truncate text-xs text-sidebar-foreground/70">{userEmail}</span>
+                                    </div>
+                                    <ChevronUp className="ml-auto size-4" />
+                                </SidebarMenuButton>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent side="top" className="w-[--radix-popper-anchor-width]">
+                                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem asChild>
+                                    <Link href="/dashboard/settings" className="w-full cursor-pointer">
+                                        <User className="mr-2 size-4" />
+                                        <span>Profile</span>
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuSub>
+                                    <DropdownMenuSubTrigger>
+                                        <Sun className="mr-2 size-4 dark:hidden" />
+                                        <Moon className="hidden mr-2 size-4 dark:block" />
+                                        <span>Theme</span>
+                                    </DropdownMenuSubTrigger>
+                                    <DropdownMenuPortal>
+                                        <DropdownMenuSubContent>
+                                            <DropdownMenuItem onClick={() => setTheme("light")}>
+                                                <Sun className="mr-2 size-4" />
+                                                <span>Light</span>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem onClick={() => setTheme("dark")}>
+                                                <Moon className="mr-2 size-4" />
+                                                <span>Dark</span>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem onClick={() => setTheme("system")}>
+                                                <Laptop className="mr-2 size-4" />
+                                                <span>System</span>
+                                            </DropdownMenuItem>
+                                        </DropdownMenuSubContent>
+                                    </DropdownMenuPortal>
+                                </DropdownMenuSub>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive cursor-pointer">
+                                    <LogOut className="mr-2 size-4" />
+                                    <span>Log out</span>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarFooter>

@@ -5,6 +5,9 @@ import { headers } from "next/headers"
 
 export const getGithubToken = async () => {
     try {
+        if (process.env.NEXT_PUBLIC_DEMO_MODE === "true") {
+            return "demo_token";
+        }
         const session = await auth.api.getSession({
             headers: await headers()
         })
@@ -38,6 +41,27 @@ export const getGithubToken = async () => {
 }
 
 export async function fetchUserContribution(token: string, username: string) {
+    if (process.env.NEXT_PUBLIC_DEMO_MODE === "true") {
+        const weeks = [];
+        const now = new Date();
+        for (let w = 0; w < 52; w++) {
+            const days = [];
+            for (let d = 0; d < 7; d++) {
+                const date = new Date(now);
+                date.setDate(now.getDate() - (52 - w) * 7 - (6 - d));
+                days.push({
+                    contributionCount: Math.floor(Math.random() * 5),
+                    date: date.toISOString().split('T')[0],
+                    color: "#216e39"
+                });
+            }
+            weeks.push({ contributionDays: days });
+        }
+        return {
+            totalContributions: 842,
+            weeks
+        };
+    }
 
     const octokit = new Octokit({
         auth: token
@@ -88,6 +112,24 @@ export async function fetchUserContribution(token: string, username: string) {
 
 export const getRepositories = async (page: number = 1, perPage: number = 10) => {
     try {
+        if (process.env.NEXT_PUBLIC_DEMO_MODE === "true") {
+            const dbRepos = await prisma.repository.findMany({
+                take: perPage,
+                skip: (page - 1) * perPage,
+                orderBy: { updatedAt: 'desc' }
+            });
+            return dbRepos.map(r => ({
+                id: Number(r.githubId),
+                name: r.name,
+                full_name: r.fullName,
+                description: r.description,
+                html_url: r.url,
+                language: r.language,
+                stargazers_count: Math.floor(Math.random() * 1000),
+                topics: ["demo", "prism", "typescript"]
+            }));
+        }
+
         const token = await getGithubToken();
         const octokit = new Octokit({ auth: token });
 

@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
   try {
     switch (event.type) {
       case "subscription.active": {
-        const customerId = event.data.customerId;
+        const customerId = event.data.customerId as string;
 
         const user = await prisma.user.findFirst({
           where: { polarCustomerId: customerId },
@@ -39,12 +39,12 @@ export async function POST(req: NextRequest) {
 
         if (!user) break;
 
-        await updateUserTier(user.id, "PRO", "ACTIVE", event.data.id);
+        await updateUserTier(user.id, "PRO", "ACTIVE", event.data.id as string);
         break;
       }
 
       case "subscription.canceled": {
-        const customerId = event.data.customerId;
+        const customerId = event.data.customerId as string;
 
         const user = await prisma.user.findFirst({
           where: { polarCustomerId: customerId },
@@ -56,13 +56,13 @@ export async function POST(req: NextRequest) {
           user.id,
           user.subscriptionTier as SubscriptionTier,
           "CANCELED",
-          event.data.id
+          event.data.id as string
         );
         break;
       }
 
       case "subscription.revoked": {
-        const customerId = event.data.customerId;
+        const customerId = event.data.customerId as string;
 
         const user = await prisma.user.findFirst({
           where: { polarCustomerId: customerId },
@@ -82,12 +82,12 @@ export async function POST(req: NextRequest) {
         if (!event.data.email) break;
 
         const user = await prisma.user.findUnique({
-          where: { email: event.data.email },
+          where: { email: event.data.email as string },
         });
 
         if (!user) break;
 
-        await updatePolarCustomerId(user.id, event.data.id);
+        await updatePolarCustomerId(user.id, event.data.id as string);
         break;
       }
 

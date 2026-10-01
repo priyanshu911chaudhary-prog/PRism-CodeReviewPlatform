@@ -11,7 +11,21 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { Skeleton } from "@/components/ui/skeleton"
 import { CheckCircle2, XCircle, AlertCircle, Sparkles, CreditCard, RefreshCw, Zap } from "lucide-react"
+import { PageHeader } from "@/components/PageHeader"
+import { ErrorState } from "@/components/ErrorState"
 
 const PLAN_FEATURES = {
     free: [
@@ -92,11 +106,6 @@ export default function SubscriptionPage() {
     };
 
     const handleDowngrade = async () => {
-        const confirmed = window.confirm(
-            "Are you sure you want to downgrade to the Free plan? Your Pro features will remain active until the end of your current billing period."
-        );
-        if (!confirmed) return;
-
         setDowngradeLoading(true);
         try {
             const result = await cancelSubscription();
@@ -129,27 +138,27 @@ export default function SubscriptionPage() {
 
     if (isLoading) {
         return (
-            <div className="container mx-auto p-6 space-y-8 animate-in fade-in duration-500 max-w-5xl">
+            <div className="flex flex-col gap-6 w-full max-w-7xl mx-auto space-y-8 animate-in fade-in duration-500">
                 <div className="space-y-2">
-                    <div className="h-8 w-48 bg-muted rounded animate-pulse" />
-                    <div className="h-4 w-96 bg-muted rounded animate-pulse" />
+                    <Skeleton className="h-8 w-48" />
+                    <Skeleton className="h-4 w-96" />
                 </div>
                 
                 <div className="grid md:grid-cols-2 gap-6">
                     <Card>
                         <CardHeader>
-                            <div className="h-6 w-32 bg-muted rounded animate-pulse" />
+                            <Skeleton className="h-6 w-32" />
                         </CardHeader>
                         <CardContent>
-                            <div className="h-24 w-full bg-muted rounded animate-pulse" />
+                            <Skeleton className="h-24 w-full" />
                         </CardContent>
                     </Card>
                     <Card>
                         <CardHeader>
-                            <div className="h-6 w-32 bg-muted rounded animate-pulse" />
+                            <Skeleton className="h-6 w-32" />
                         </CardHeader>
                         <CardContent>
-                            <div className="h-24 w-full bg-muted rounded animate-pulse" />
+                            <Skeleton className="h-24 w-full" />
                         </CardContent>
                     </Card>
                 </div>
@@ -159,20 +168,16 @@ export default function SubscriptionPage() {
 
     if (error) {
         return (
-            <div className="container mx-auto p-6 max-w-5xl flex items-center justify-center min-h-[60vh]">
-                <Alert variant="destructive" className="max-w-md">
-                    <AlertCircle className="size-4" />
-                    <AlertTitle>Something went wrong</AlertTitle>
-                    <AlertDescription>
-                        We couldn&apos;t load your subscription data. Please try again later.
-                        <div className="mt-4">
-                            <Button variant="outline" size="sm" onClick={() => refetch()}>
-                                <RefreshCw className="mr-2 size-4" />
-                                Try Again
-                            </Button>
-                        </div>
-                    </AlertDescription>
-                </Alert>
+            <div className="flex items-center justify-center min-h-[60vh]">
+                <ErrorState 
+                    title="Something went wrong" 
+                    message="We couldn't load your subscription data. Please try again later."
+                >
+                    <Button variant="outline" size="sm" onClick={() => refetch()}>
+                        <RefreshCw className="mr-2 size-4" />
+                        Try Again
+                    </Button>
+                </ErrorState>
             </div>
         );
     }
@@ -202,13 +207,13 @@ export default function SubscriptionPage() {
     const repositoriesPercentage = Math.min((repositoriesCount / repositoriesLimit) * 100, 100);
 
     return (
-        <div className="container mx-auto p-6 max-w-5xl space-y-8 animate-in slide-in-from-bottom-4 fade-in duration-500">
+        <div className="flex flex-col gap-6 w-full max-w-7xl mx-auto">
             {/* Header Area */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                    <h1 className="text-3xl font-bold tracking-tight">Subscription</h1>
-                    <p className="text-muted-foreground mt-1">Manage your billing plan, usage, and preferences.</p>
-                </div>
+            <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
+                <PageHeader 
+                    title="Subscription" 
+                    description="Manage your billing plan, usage, and preferences."
+                />
                 <div className="flex items-center gap-3">
                     <Button variant="outline" size="sm" onClick={handleSync} disabled={syncLoading || isLoading} className="hidden sm:flex">
                         <RefreshCw className={`mr-2 size-4 ${syncLoading ? "animate-spin" : ""}`} />
@@ -264,9 +269,9 @@ export default function SubscriptionPage() {
                             <span className="text-muted-foreground">Status:</span>
                             <span className="font-medium flex items-center gap-1">
                                 {isActive ? (
-                                    <><div className="size-2 rounded-full bg-emerald-500" /> Active</>
+                                    <><div className="size-2 rounded-full bg-success" /> Active</>
                                 ) : (
-                                    <><div className="size-2 rounded-full bg-amber-500" /> Inactive</>
+                                    <><div className="size-2 rounded-full bg-warning" /> Inactive</>
                                 )}
                             </span>
                         </div>
@@ -301,18 +306,41 @@ export default function SubscriptionPage() {
                             </ul>
                         </CardContent>
                         <CardFooter>
-                            <Button
-                                className="w-full"
-                                variant={!isPro ? "secondary" : "destructive"}
-                                disabled={!isPro || downgradeLoading}
-                                onClick={isPro ? handleDowngrade : undefined}
-                            >
-                                {!isPro
-                                    ? "Current Plan"
-                                    : downgradeLoading
-                                        ? "Cancelling..."
-                                        : "Downgrade to Free"}
-                            </Button>
+                            {!isPro ? (
+                                <Button
+                                    className="w-full"
+                                    variant="secondary"
+                                    disabled={true}
+                                >
+                                    Current Plan
+                                </Button>
+                            ) : (
+                                <AlertDialog>
+                                    <AlertDialogTrigger asChild>
+                                        <Button
+                                            className="w-full"
+                                            variant="destructive"
+                                            disabled={downgradeLoading}
+                                        >
+                                            {downgradeLoading ? "Cancelling..." : "Downgrade to Free"}
+                                        </Button>
+                                    </AlertDialogTrigger>
+                                    <AlertDialogContent>
+                                        <AlertDialogHeader>
+                                            <AlertDialogTitle>Downgrade to Free plan?</AlertDialogTitle>
+                                            <AlertDialogDescription>
+                                                Are you sure you want to downgrade to the Free plan? Your Pro features will remain active until the end of your current billing period.
+                                            </AlertDialogDescription>
+                                        </AlertDialogHeader>
+                                        <AlertDialogFooter>
+                                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                            <AlertDialogAction onClick={handleDowngrade} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                                                Confirm Downgrade
+                                            </AlertDialogAction>
+                                        </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                </AlertDialog>
+                            )}
                         </CardFooter>
                     </Card>
 

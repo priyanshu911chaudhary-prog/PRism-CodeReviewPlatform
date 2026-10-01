@@ -26,17 +26,39 @@ const LoginUI = () => {
         } 
     }
 
+    const handleDemoLogin = async () => {
+        setError(null)
+        setIsLoading(true)
+        try {
+            const res = await signIn.email({
+                email: "demo@prism.local",
+                password: "Demo@123"
+            })
+            if (res.error) {
+                console.log("Error in Demo Login:", res.error)
+                setError("Failed to sign in with Demo Account. Please try again.")
+                setIsLoading(false)
+            } else {
+                window.location.href = "/dashboard"
+            }
+        } catch (error) {
+            console.log("Error in Demo Login:", error)
+            setError("Failed to sign in with Demo Account. Please try again.")
+            setIsLoading(false)
+        }
+    }
+
     return (
         <Card className="w-full max-w-sm mx-auto shadow-xl">
             <CardHeader className="text-center">
-                <CardTitle className="text-2xl font-semibold tracking-tight">Welcome Back</CardTitle>
+                <h2 className="font-heading text-2xl font-semibold leading-snug tracking-tight">Start reviewing.</h2>
                 <CardDescription>
-                    Sign in to your account using your GitHub profile.
+                    Sign in with GitHub to connect your first repository.
                 </CardDescription>
             </CardHeader>
             <CardContent>
                 {error && (
-                    <p className="mb-4 text-sm text-destructive text-center">
+                    <p role="alert" className="mb-4 text-sm text-destructive text-center">
                         {error}
                     </p>
                 )}
@@ -58,9 +80,20 @@ const LoginUI = () => {
 
                     Sign in with GitHub
                 </Button>
+
+                {process.env.NEXT_PUBLIC_DEMO_MODE === "true" && (
+                    <Button
+                        variant="secondary"
+                        className="w-full font-medium mt-4 border-border/50"
+                        onClick={handleDemoLogin}
+                        disabled={isLoading}
+                    >
+                        Sign in with Demo Account
+                    </Button>
+                )}
             </CardContent>
             <CardFooter className="text-center text-sm text-muted-foreground flex justify-center">
-                By continuing, you agree to our Terms of Service.
+                By continuing, you authorize PRism to access your repositories.
             </CardFooter>
         </Card>
     )

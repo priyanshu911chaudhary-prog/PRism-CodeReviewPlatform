@@ -20,6 +20,9 @@ import { formatDistanceToNow } from "date-fns";
 import { getReview } from "@/modules/review/actions";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { Blobatar } from "@/components/ui/blobatar";
+import { PageHeader } from "@/components/PageHeader";
+import React from "react";
 
 interface ReviewType {
   id: string;
@@ -31,7 +34,7 @@ interface ReviewType {
   review?: string;
 }
 
-function ReviewCardItem({ review }: { review: ReviewType }) {
+const ReviewCardItem = React.memo(({ review }: { review: ReviewType }) => {
 
     return (
         <Card className="hover:shadow-md transition-all duration-200 border-border/50 bg-card overflow-hidden">
@@ -39,13 +42,14 @@ function ReviewCardItem({ review }: { review: ReviewType }) {
                 <div className="flex flex-col gap-3">
                     <div className="flex flex-wrap items-center justify-between gap-2">
                         <div className="flex flex-wrap items-center gap-2">
+                            <Blobatar name={review.repository?.name || "repo"} className="h-6 w-6 rounded-md shrink-0" blobatar={{ animate: "hover" }} />
                             <Badge variant="secondary" className="bg-secondary/50 font-mono text-xs">
                                 {review.repository?.name}
                             </Badge>
                             
                             <Badge
                                 variant={review.status === "completed" || review.status === "COMPLETED" ? "default" : "outline"}
-                                className={`capitalize text-xs ${review.status === "completed" || review.status === "COMPLETED" ? "bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20 border-emerald-500/20" : ""}`}
+                                className={`capitalize text-xs ${review.status === "completed" || review.status === "COMPLETED" ? "bg-success/10 text-success hover:bg-success/20 border-success/20" : ""}`}
                             >
                                 {review.status}
                             </Badge>
@@ -66,7 +70,7 @@ function ReviewCardItem({ review }: { review: ReviewType }) {
                             href={review.prUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="hover:text-primary transition-colors inline-flex items-baseline gap-1.5"
+                            className="hover:text-primary transition-colors inline-flex items-baseline gap-1.5 focus-visible:outline-2 focus-visible:outline-ring rounded-sm"
                         >
                             <span className="line-clamp-2">{review.prTitle}</span>
                             <ExternalLink className="w-4 h-4 text-muted-foreground opacity-50 group-hover:opacity-100 transition-opacity translate-y-0.5 shrink-0" />
@@ -100,7 +104,9 @@ function ReviewCardItem({ review }: { review: ReviewType }) {
             </CardContent>
         </Card>
     );
-}
+});
+
+ReviewCardItem.displayName = "ReviewCardItem";
 
 export default function ReviewPage() {
     const {
@@ -115,13 +121,11 @@ export default function ReviewPage() {
     })
 
     return (
-        <div className="flex flex-col gap-6 w-full max-w-7xl mx-auto p-4 md:p-6">
-            <div className="flex flex-col gap-2">
-                <h1 className="text-3xl font-bold tracking-tight">Review History</h1>
-                <p className="text-muted-foreground">
-                    Your latest AI-powered code review summaries.
-                </p>
-            </div>
+        <div className="flex flex-col gap-6 w-full max-w-7xl mx-auto">
+            <PageHeader 
+                title="Review History" 
+                description="Your latest AI-powered code review summaries."
+            />
 
             {isLoading && (
                 <div className="flex justify-center p-8">

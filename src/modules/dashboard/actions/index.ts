@@ -18,10 +18,12 @@ export async function getContributionStats() {
 
         const token = await getGithubToken()
 
-        const octokit = new Octokit({ auth: token })
-
-        const { data: user } = await octokit.rest.users.getAuthenticated()
-        const username = user.login;
+        let username = "demo_user";
+        if (process.env.NEXT_PUBLIC_DEMO_MODE !== "true") {
+            const octokit = new Octokit({ auth: token })
+            const { data: user } = await octokit.rest.users.getAuthenticated()
+            username = user.login;
+        }
 
         const calendar = await fetchUserContribution(token, username);
 
@@ -61,7 +63,9 @@ export async function getDashboardStats() {
         const token = await getGithubToken()
         const octokit = new Octokit({ auth: token })
 
-        const { data: user } = await octokit.rest.users.getAuthenticated()
+        const { data: user } = process.env.NEXT_PUBLIC_DEMO_MODE === "true" 
+            ? { data: { login: "demo-user" } } 
+            : await octokit.rest.users.getAuthenticated()
 
         // Fetch total connected repos from DB
         const totalRepos = await prisma.repository.count({
@@ -71,14 +75,16 @@ export async function getDashboardStats() {
         const calendar = await fetchUserContribution(token, user.login)
         const totalCommits = calendar?.totalContributions || 0
 
-        const { data: prs } = await octokit.rest.search.issuesAndPullRequests({
-            q: `author:${user.login} type:pr`,
-            sort: "created",
-            order: "desc",
-            per_page: 1
-        })
-
-        const totalPRs = prs.total_count
+        let totalPRs = 25;
+        if (process.env.NEXT_PUBLIC_DEMO_MODE !== "true") {
+            const { data: prs } = await octokit.rest.search.issuesAndPullRequests({
+                q: `author:${user.login} type:pr`,
+                sort: "created",
+                order: "desc",
+                per_page: 1
+            })
+            totalPRs = prs.total_count;
+        }
 
         // Count AI reviews from database (through user's connected repositories)
         const totalReviews = await prisma.review.count({
@@ -120,7 +126,9 @@ export async function getMonthlyActivity() {
         const token = await getGithubToken()
         const octokit = new Octokit({ auth: token })
 
-        const { data: user } = await octokit.rest.users.getAuthenticated()
+        const { data: user } = process.env.NEXT_PUBLIC_DEMO_MODE === "true" 
+            ? { data: { login: "demo-user" } } 
+            : await octokit.rest.users.getAuthenticated()
 
         const calendar = await fetchUserContribution(token, user.login)
 
@@ -197,19 +205,25 @@ export async function getMonthlyActivity() {
             }
         })
 
-        const { data: prs } = await octokit.rest.search.issuesAndPullRequests({
-            q: `author:${user.login} type:pr created:>${sixMonthsAgo.toISOString().split("T")[0]}`,
-            per_page: 100,
-        });
+        if (process.env.NEXT_PUBLIC_DEMO_MODE === "true") {
+            Object.keys(monthlyData).forEach(key => {
+                monthlyData[key].prs = Math.floor(Math.random() * 10) + 1;
+            });
+        } else {
+            const { data: prs } = await octokit.rest.search.issuesAndPullRequests({
+                q: `author:${user.login} type:pr created:>${sixMonthsAgo.toISOString().split("T")[0]}`,
+                per_page: 100,
+            });
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        prs.items.forEach((pr: any) => {
-            const date = new Date(pr.created_at);
-            const monthKey = monthNames[date.getMonth()];
-            if (monthlyData[monthKey]) {
-                monthlyData[monthKey].prs += 1;
-            }
-        });
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            prs.items.forEach((pr: any) => {
+                const date = new Date(pr.created_at);
+                const monthKey = monthNames[date.getMonth()];
+                if (monthlyData[monthKey]) {
+                    monthlyData[monthKey].prs += 1;
+                }
+            });
+        }
 
         return Object.keys(monthlyData).map((name) => ({
             name,

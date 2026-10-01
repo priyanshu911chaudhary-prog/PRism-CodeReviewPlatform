@@ -39,6 +39,8 @@ import { authClient } from "@/lib/authClient";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 
+import { PageHeader } from "@/components/PageHeader";
+
 const StatSkeleton = () => <Skeleton className="h-8 w-16 mt-1" />;
 
 const MainPage=()=>{
@@ -60,10 +62,10 @@ const MainPage=()=>{
 
     return(
         <div className="flex flex-col gap-6 w-full max-w-7xl mx-auto">
-            <div className="flex flex-col gap-2">
-                <h1 className="text-3xl font-bold tracking-tight">Hello {userName},</h1>
-                <p className="text-muted-foreground">Overview of your coding activity and ai reviews</p>
-            </div>
+            <PageHeader 
+                title={`Hello ${userName},`} 
+                description="Overview of your coding activity and AI Reviews" 
+            />
             
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <Card>
@@ -147,9 +149,9 @@ const MainPage=()=>{
                                         contentStyle={{ borderRadius: '8px', border: '1px solid var(--border)' }}
                                     />
                                     <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} />
-                                    <Bar dataKey="commits" name="Contributions" fill="currentColor" className="fill-primary" radius={[4, 4, 0, 0]} />
-                                    <Bar dataKey="prs" name="Pull Requests" fill="#10b981" radius={[4, 4, 0, 0]} />
-                                    <Bar dataKey="reviews" name="AI Reviews" fill="#f59e0b" radius={[4, 4, 0, 0]} />
+                                    <Bar dataKey="commits" name="Contributions" fill="var(--chart-1)" radius={[4, 4, 0, 0]} />
+                                    <Bar dataKey="prs" name="Pull Requests" fill="var(--chart-2)" radius={[4, 4, 0, 0]} />
+                                    <Bar dataKey="reviews" name="AI Reviews" fill="var(--chart-3)" radius={[4, 4, 0, 0]} />
                                 </BarChart>
                             </ResponsiveContainer>
                         )}

@@ -21,6 +21,9 @@ import {
 } from "@/components/ui/select";
 import { Empty, EmptyTitle, EmptyDescription } from "@/components/ui/empty";
 import { Spinner } from "@/components/ui/spinner";
+import { Blobatar } from "@/components/ui/blobatar";
+import { PageHeader } from "@/components/PageHeader";
+import { ErrorState } from "@/components/ErrorState";
 
 import { ExternalLink, Star, Search } from "lucide-react";
 
@@ -135,17 +138,18 @@ const RepositoryPage = () => {
     };
 
     return (
-        <div className="flex flex-col gap-6 w-full max-w-7xl mx-auto p-4 md:p-6">
-            <div className="flex flex-col gap-2">
-                <h1 className="text-3xl font-bold tracking-tight">Repositories</h1>
-                <p className="text-muted-foreground">Manage your connected git repositories</p>
-            </div>
+        <div className="flex flex-col gap-6 w-full max-w-7xl mx-auto">
+            <PageHeader 
+                title="Repositories" 
+                description="Manage your connected git repositories" 
+            />
 
             <div className="flex flex-col md:flex-row gap-4">
                 <div className="relative flex-1">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
                         type="text"
+                        aria-label="Search repositories"
                         placeholder="Search repositories"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
@@ -178,17 +182,17 @@ const RepositoryPage = () => {
                 </Select>
             </div>
 
-            <div className="grid gap-4">
+            <div className="grid gap-4" role="feed" aria-busy={isFetchingNextPage}>
                 {isLoading && (
                     <div className="flex justify-center p-8">
                         <Spinner className="size-8 text-muted-foreground" />
                     </div>
                 )}
                 {isError && (
-                    <Empty className="my-8 border-destructive/50">
-                        <EmptyTitle>Error</EmptyTitle>
-                        <EmptyDescription>Failed to load repositories. Please try again.</EmptyDescription>
-                    </Empty>
+                    <ErrorState 
+                        title="Error Loading Repositories"
+                        message="Failed to load repositories. Please try again."
+                    />
                 )}
                 {!isLoading && !isError && filteredRepositories.length === 0 && (
                     <Empty className="my-8">
@@ -206,6 +210,7 @@ const RepositoryPage = () => {
                             <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
                                 <div className="space-y-3 flex-1 min-w-0">
                                     <div className="flex flex-wrap items-center gap-2">
+                                        <Blobatar name={String(repo.id)} className="h-8 w-8 rounded-lg" blobatar={{ animate: "hover" }} />
                                         <CardTitle className="text-xl truncate mr-2">{repo.name}</CardTitle>
 
                                         {repo.language && (
@@ -215,7 +220,7 @@ const RepositoryPage = () => {
                                         )}
 
                                         {repo.isConnected && (
-                                            <Badge variant="default" className="bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20 border-emerald-500/20">
+                                            <Badge variant="default" className="bg-success/10 text-success hover:bg-success/20 border-success/20">
                                                 Connected
                                             </Badge>
                                         )}
@@ -254,7 +259,7 @@ const RepositoryPage = () => {
                                             href={repo.html_url}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            title="View on GitHub"
+                                            aria-label={`View ${repo.name} on GitHub`}
                                         >
                                             <ExternalLink className="h-4 w-4 text-muted-foreground" />
                                         </a>
@@ -283,9 +288,11 @@ const RepositoryPage = () => {
                 {isFetchingNextPage && <RepositoryListSkeleton />}
 
                 {!hasNextPage && allRepositories.length > 0 && (
-                    <p className="text-center text-sm text-muted-foreground mt-4">
-                        You&apos;ve reached the end of your repositories.
-                    </p>
+                    <div aria-live="polite">
+                        <p className="text-center text-sm text-muted-foreground mt-4">
+                            You&apos;ve reached the end of your repositories.
+                        </p>
+                    </div>
                 )}
             </div>
         </div>
